@@ -15,4 +15,6 @@ $container = require_once dirname(__DIR__) . '/bootstrap.php';
 
 $app = new \App\Core\App($container);
 
-die($app->run());
+$response = $app->run();
+
+die($response->getBody()->getContents());

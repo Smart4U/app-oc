@@ -2,7 +2,10 @@
 
 namespace App\Core;
 
+use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\ServerRequest;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class App
@@ -28,10 +31,12 @@ class App
     /**
      * Start the application and send the response
      *
-     * @return string
+     * @return ResponseInterface
      */
-    public function run(): string
+    public function run(): ResponseInterface
     {
-        return 'app loaded...';
+        ServerRequest::fromGlobals();
+
+        return new Response(200, [], 'app loaded...', 1.1);
     }
 }
