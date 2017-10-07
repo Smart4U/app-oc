@@ -2,6 +2,7 @@
 <ruleset name="app-oc">
     <description>PSR2 coding standard</description>
     <file>src</file>
+    <file>database</file>
     <file>public/index.php</file>
     <exclude-pattern type="relative">^/tests/*</exclude-pattern>
     <arg name="report" value="summary"/>
@@ -10,5 +11,7 @@
     <ini name="memory_limit" value="64M"/>
     <autoload>vendor/autoload.php</autoload>
     <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
-    <rule ref="PSR2"/>
+    <rule ref="PSR2">
+        <exclude name="PSR1.Classes.ClassDeclaration.MissingNamespace"/>
+    </rule>
 </ruleset>
