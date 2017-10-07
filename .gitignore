@@ -1,0 +1,9 @@
+.idea
+
+vendor
+composer.lock
+composer.phar
+
+node_modules
+
+tests/coverage
