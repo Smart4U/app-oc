@@ -2,7 +2,9 @@
     "name": "smart4u/app-oc",
     "description": "OpenClassrooms Project 5 | The Blog",
     "require": {
-        "php": "^7.1"
+        "php": "^7.1",
+        "php-di/php-di": "^5.4",
+        "vlucas/phpdotenv": "^2.4"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.4",

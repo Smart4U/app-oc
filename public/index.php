@@ -7,13 +7,12 @@
  */
 
 
+
 /**
  * Bootstrap file to initializes application dependencies
  */
-require(dirname(__DIR__) . '/bootstrap.php');
+$container = require_once dirname(__DIR__) . '/bootstrap.php';
 
+$app = new \App\Core\App($container);
 
-
-$app = new \App\Core\App();
-
-echo $app->run();
+die($app->run());

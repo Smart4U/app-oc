@@ -16,10 +16,10 @@ class AppTest extends TestCase
 
     public function setUp()
     {
-        $this->app = new App();
+        $this->app = new App(require_once dirname(dirname(__DIR__)) . '/bootstrap.php');
     }
 
-    public function testIfMethodRunReturnCorrectReponse() {
+    public function testIfMethodRunReturnAString() {
         $this->assertEquals('app loaded...', $this->app->run());
     }
 
