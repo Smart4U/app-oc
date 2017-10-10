@@ -22,8 +22,8 @@ class Sqlite extends Base
      */
     protected $required = ['name'];
 
-    public function createConnection(array $settings) {
+    public function createConnection(array $settings)
+    {
         $this->pdo = new PDO('sqlite:'.$settings['name']);
     }
-
 }

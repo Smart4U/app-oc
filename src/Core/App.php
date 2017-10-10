@@ -2,10 +2,12 @@
 
 namespace App\Core;
 
-use App\Core\Database\Database;
+use App\Core\Database\Driver\DriverFactory;
+use App\Core\Database\PaginatedQuery;
 use App\Core\Database\QueryBuilder;
 use App\Core\Routing\Router;
 use GuzzleHttp\Psr7\Response;
+use Pagerfanta\Pagerfanta;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -31,10 +33,8 @@ class App
         $this->container = $container;
 
         $router = $this->container->get(Router::class);
-        $router->get('page.home', '/', function () {
-
+        $router->get('page.home', '/', function () use ($router) {
             return new Response(200, [], null);
-
         });
         $router->get('page.about', '/a-propos', function () {
             return new Response(200, [], 'page à-propos');
@@ -76,6 +76,14 @@ class App
         $request = array_reduce(array_keys($params), function ($request, $key) use ($params) {
             return $request->withAttribute($key, $params[$key]);
         }, $request);
+
+        $pdo = DriverFactory::getDriver($this->container->get('database'))->getConnection();
+
+        $pagination = (
+            new Pagerfanta(
+                (new QueryBuilder($pdo, "SELECT * FROM posts", "SELECT COUNT(id) FROM posts"))
+            )
+        )->setMaxPerPage(10)->setCurrentPage($request->getQueryParams()['p'] ?? 1);
 
 
         // Get the response handler :ResponseInterface

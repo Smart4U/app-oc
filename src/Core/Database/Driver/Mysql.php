@@ -37,7 +37,7 @@ class Mysql extends Base
      */
     public function createConnection(array $settings = []): PDO
     {
-        return new PDO( $this->dsn($settings), $settings['username'], $settings['password'], $this->options);
+        return new PDO($this->dsn($settings), $settings['username'], $settings['password'], $this->options);
     }
 
     /**
@@ -55,5 +55,4 @@ class Mysql extends Base
 
         return $dsn;
     }
-
 }

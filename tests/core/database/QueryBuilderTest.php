@@ -194,6 +194,4 @@ class QueryBuilderTest extends DatabaseTestCase
         $this->assertEquals(1, count($item));
     }
 
-
-
 }

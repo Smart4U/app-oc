@@ -57,15 +57,16 @@ abstract class Base
     /**
      * @return mixed
      */
-    public function getConnection() {
+    public function getConnection()
+    {
         return $this->pdo;
     }
 
     /**
      * @return void
      */
-    public function closeConnection(): void {
+    public function closeConnection(): void
+    {
         $this->pdo = null;
     }
-
 }

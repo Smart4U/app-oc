@@ -6,7 +6,6 @@ use App\Core\Database\Driver\Sqlite;
 use App\Core\Database\Driver\Mysql;
 use App\Core\Database\Driver\DriverFactory;
 
-
 /**
  * Class Database
  * @package App\Core\Database
@@ -24,21 +23,24 @@ class Database
      * Database constructor.
      * @param array $settings
      */
-    public function __construct(array $settings = []) {
+    public function __construct(array $settings = [])
+    {
         $this->driver = DriverFactory::getDriver($settings);
     }
 
     /**
      * @return void
      */
-    public function __destruct() {
+    public function __destruct()
+    {
         $this->closeConnection();
     }
 
     /**
      * @return mixed
      */
-    public function getConnection() {
+    public function getConnection()
+    {
         return $this->driver->getConnection();
     }
 
@@ -46,8 +48,8 @@ class Database
      * Close connection
      * @retutn void
      */
-    public function closeConnection(): void {
+    public function closeConnection(): void
+    {
         $this->driver->closeConnection();
     }
-
 }
