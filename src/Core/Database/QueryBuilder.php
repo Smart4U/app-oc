@@ -2,6 +2,7 @@
 
 namespace App\Core\Database;
 
+use Pagerfanta\Pagerfanta;
 use PDO;
 use PDOException;
 use PDOStatement;
@@ -371,6 +372,21 @@ class QueryBuilder implements AdapterInterface
 
         $this->queryCleaner();
         return $query;
+    }
+
+    /**
+     * @param string $table
+     * @param int $maxPerPage
+     * @param int $currentPage
+     * @return Pagerfanta
+     */
+    public function paginate(string $table, int $maxPerPage, int $currentPage) : Pagerfanta
+    {
+        return (
+            new Pagerfanta(
+                (new $this($this->pdo, "SELECT * FROM {$table}", "SELECT COUNT(id) FROM {$table}"))
+            )
+        )->setMaxPerPage($maxPerPage)->setCurrentPage($currentPage);
     }
 
     /**
