@@ -3,6 +3,8 @@
 namespace App\Core\Database;
 
 use PDO;
+use PDOException;
+use PDOStatement;
 
 /**
  * Class QueryBuilder
@@ -15,6 +17,10 @@ class QueryBuilder
      * @var PDO
      */
     private $pdo;
+    /**
+     * @var array
+     */
+    private $sql;
     /**
      * @var array|string|null
      */
@@ -121,37 +127,6 @@ class QueryBuilder
         $this->select("COUNT(id)");
         return $this->execute()->fetchColumn();
     }
-
-    /**
-     * @return \PDOStatement
-     */
-    public function execute() {
-        $query = $this->__toString();
-
-        if(!empty($this->params)) {
-            $statement = $this->pdo->prepare($query);
-            $statement->execute($this->params);
-            return $statement;
-        }
-        return $this->pdo->query($query);
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString() {
-        $query = [];
-        $query[] = $this->buildSelect(); // SELECT
-        $query[] = $this->buildCount();  // COUNT
-        $query[] = $this->buildFrom();   // FROM
-        $query[] = $this->buildWhere();  // WHERE
-        $query[] = $this->buildOrder();  // ORDER
-        $query[] = $this->buildLimit();  // LIMIT
-        $query[] = $this->buildOffset();  // OFFSET
-        $query = (string)join(' ', $query);
-        return $this->clearSql($query);
-    }
-
 
     /**
      * @param string $table
@@ -280,6 +255,9 @@ class QueryBuilder
         return $this->order;
     }
 
+    /**
+     * @return string
+     */
     private function buildLimit(): string {
         if(is_null($this->limit)){
             return '';
@@ -288,7 +266,7 @@ class QueryBuilder
         if(is_null($this->offset)) {
             return "LIMIT {$this->limit}";
         }
-        return "LIMIT {$this->limit}, ";
+        return "LIMIT {$this->limit},";
     }
 
     /**
@@ -303,14 +281,63 @@ class QueryBuilder
     }
 
     /**
-     * @param $query
+     * @return bool|PDOStatement
+     * @throws SQLException
+     */
+    public function execute() {
+        $query = $this->__toString();
+
+        $this->queryCleaner();
+
+        try {
+
+            if(!empty($this->params)) { // Query Prepared
+                $statement = $this->bindParams($query);
+                return $statement->execute($this->params);
+            }
+
+            return $this->pdo->query($query); // Query Simple
+
+        } catch (PDOException $e) {
+            throw new SQLException('This query is not correct' .$e->getMessage());
+        }
+
+    }
+
+
+    /**
+     * Add parameters for the query
+     * @param $params
+     * @return PDOStatement
+     */
+    private function bindParams($params) :PDOStatement {
+        return $this->pdo->prepare($params);
+    }
+
+    /**
+     * Clear the query
+     */
+    private function queryCleaner() {
+        $this->sql = '';
+    }
+
+    /**
      * @return string
      */
-    private function clearSql($query): string {
-        $query = trim($query);
-        $query = preg_replace('#[ ]+#', ' ',  $query);
-        return $query;
+    public function __toString() {
+        $this->sql = [];
+        $this->sql[] = $this->buildSelect(); // SELECT
+        $this->sql[] = $this->buildCount();  // COUNT
+        $this->sql[] = $this->buildFrom();   // FROM
+        $this->sql[] = $this->buildWhere();  // WHERE
+        $this->sql[] = $this->buildOrder();  // ORDER
+        $this->sql[] = $this->buildLimit();  // LIMIT
+        $this->sql[] = $this->buildOffset(); // OFFSET
+        $this->sql = (string)join(' ', array_filter($this->sql));
+
+        return (string)$this->sql;
     }
+
 
 }
 

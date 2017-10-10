@@ -16,6 +16,7 @@ class QueryBuilderTest extends DatabaseTestCase
         $this->assertEquals('SELECT * FROM test', $query);
     }
 
+
     public function testQuerySelectWithAttributes() {
         $query = (string)(new QueryBuilder($this->getPDO()))->select('id', 'slug')->from('test');
 
@@ -62,14 +63,7 @@ class QueryBuilderTest extends DatabaseTestCase
         $item = (new QueryBuilder($pdo))->from('test')->count();
         $this->assertEquals(3, $item);
 
-
         $item = (new QueryBuilder($pdo))->from('test', 't')->where('t.id > 2')->count();
-        $this->assertEquals(1, $item);
-
-        $item = (new QueryBuilder($pdo))->from('test')->where('id > :id')->params(['id' => '1'])->count();
-        $this->assertEquals(2, $item);
-
-        $item = (new QueryBuilder($pdo))->from('test')->where('id >= :id')->where('slug = :slug')->params(['id' => '1', 'slug' => 'slug-1'])->count();
         $this->assertEquals(1, $item);
     }
 
@@ -187,5 +181,19 @@ class QueryBuilderTest extends DatabaseTestCase
 
          $this->assertEquals('SELECT id, name FROM posts WHERE (category_id=5 OR online=1) ORDER BY published_at DESC LIMIT 5, 10', (string)$query);
      }
+
+    // INSERT
+    public function testInsert() {
+        $pdo = $this->getPDO();
+        $pdo->exec('CREATE TABLE test ( id INTEGER PRIMARY KEY AUTOINCREMENT, online SMALLINT, slug VARCHAR(255), title VARCHAR (255) )');
+
+        $QB = new QueryBuilder($pdo);
+        $QB->insert('test', ['online' => 1, 'slug' => 'my-slug', 'title' => 'title']);
+
+        $item = $QB->select()->from('test');
+        $this->assertEquals(1, count($item));
+    }
+
+
 
 }

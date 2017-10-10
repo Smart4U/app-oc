@@ -19,6 +19,7 @@ class Database
      */
     private $driver;
 
+
     /**
      * Database constructor.
      * @param array $settings
