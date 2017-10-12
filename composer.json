@@ -8,7 +8,9 @@
         "guzzlehttp/psr7": "^1.4",
         "zendframework/zend-expressive-fastroute": "^2.1",
         "http-interop/response-sender": "^1.0",
-        "pagerfanta/pagerfanta": "^1.0"
+        "pagerfanta/pagerfanta": "^1.0",
+        "twbs/bootstrap-sass": "^3.3",
+        "twig/twig": "^2.4",
     },
     "require-dev": {
         "phpunit/phpunit": "^6.4",

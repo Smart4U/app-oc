@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="fr-FR">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+    <link rel="shortcut icon" href="favicon.ico"/>
+    <title>{% block title %}{% endblock %}NetADN</title>
+    {% block style %}
+        {{ style('app.css') }}
+    {% endblock %}
+</head>
+<body>
+{% include 'elements/loader.twig' %}
+{% include 'elements/search.twig' %}
+{% include 'elements/widget.twig' %}
+<div class="site">
+
+    {% block nav %}
+        {% include 'elements/nav.twig' %}
+    {% endblock %}
+
+    <div id="main">
+        {% block content %}{% endblock %}
+    </div>
+    {% include 'elements/footer.twig' %}
+
+</div>
+
+
+{% block script %}
+    {{ script('app.js') }}
+{% endblock %}
+</body>
+</html>
