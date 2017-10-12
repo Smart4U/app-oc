@@ -27,7 +27,6 @@ class FrontHelperTwigExtension extends \Twig_Extension
     {
         $this->domain = getenv('APP_DOMAIN');
         $this->manifest = file_get_contents(ROOT . '/public/dist/manifest.json');
-
     }
 
     /**
@@ -49,7 +48,7 @@ class FrontHelperTwigExtension extends \Twig_Extension
      */
     public function style(string $file) :string
     {
-        if(getenv('APP_ENV') !== 'dev') {
+        if (getenv('APP_ENV') !== 'dev') {
             $manifest = json_decode($this->manifest, true);
             return '<link rel="stylesheet" href="' . $this->domain . '/dist/' . $manifest[$file] . '" type="text/css" media="all"/>';
         }
@@ -73,7 +72,7 @@ class FrontHelperTwigExtension extends \Twig_Extension
      */
     public function script(string $file) :string
     {
-        if(getenv('APP_ENV') !== 'dev') {
+        if (getenv('APP_ENV') !== 'dev') {
             $manifest = json_decode($this->manifest, true);
             return '<script type="text/javascript" src="' . $this->domain . '/dist/' . $manifest[$file] . '"></script>';
         }
@@ -89,5 +88,4 @@ class FrontHelperTwigExtension extends \Twig_Extension
     {
         return $this->domain . '/dist/' . $file;
     }
-
 }

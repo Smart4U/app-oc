@@ -2,7 +2,6 @@
 
 namespace App\Core\Renderer;
 
-
 /**
  * Class TwigRenderer
  * @package App\Core\Renderer

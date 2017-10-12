@@ -2,7 +2,6 @@
 
 namespace App\Core\Twig;
 
-
 use App\Core\Routing\Router;
 
 /**
@@ -45,5 +44,4 @@ class RouterTwigExtension extends \Twig_Extension
     {
         return $this->router->getURI($path, $params);
     }
-
 }
