@@ -1,0 +1,39 @@
+{% extends "layouts/default.twig" %}
+
+{% block title %}Contact{% endblock %}
+
+{% block content %}
+    <form class="form-contact" action="{{ url('contact.send') }}" method="POST">
+
+        {{ csrfField() }}
+
+        {% include 'elements/flash.twig' %}
+
+        <div class="row">
+            {{ field('firstName', firstName, {class: 'form-control form-text', placeholder: 'First Name'}, false, 'text', {div: {class: 'col-md-6'}}) }}
+            {{ field('lastName', lastName, {class: 'form-control form-text', placeholder: 'Last Name'}, false, 'text', {div: {class: 'col-md-6'}}) }}
+        </div>
+
+        <div class="row">
+            {{ field('email', email, {class: 'form-control form-text', placeholder: 'Email'}, false, 'email', {div: {class: 'col-md-6'}}) }}
+            {{ field('phone', phone, {class: 'form-control form-text', placeholder: 'Phone'}, false, 'phone', {div: {class: 'col-md-6'}}) }}
+        </div>
+
+        <div class="row">
+            {{ selectField('subject', subject, {options: {0: 'subject 1', 1: 'subject 2' }}, {class: 'form-control form-text', placeholder: 'Subject'}, false, 'text', {div: {class: 'col-md-12'}}) }}
+        </div>
+
+        <div class="row">
+            {{ longField('message', message, {class: 'form-control form-control', placeholder: 'Your message...'}, false, 40,  10, {div: {class: 'col-md-12'}}) }}
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-item text-center">
+                    {{ btn('Send', {class: 'submit'}) }}
+                </div>
+            </div>
+        </div>
+
+    </form>
+{% endblock %}

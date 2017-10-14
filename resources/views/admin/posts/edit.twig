@@ -1,0 +1,18 @@
+{% extends "layouts/admin.twig" %}
+
+{% block title %}Editer l'article : {% endblock %}
+
+{% block content %}
+
+    <h2 class="sub-header">Editer l'article : {{ item.title }}</h2>
+
+    <form class="form-posts" action="{{ path('admin.posts.update', {id: item.id}) }}" method="POST"><input type="hidden" name="http_method" value="PUT">
+
+
+        {% include('admin/posts/post-form.twig') %}
+
+        <button type="submit" class="btn btn-info">Modifier</button>
+
+    </form>
+
+{% endblock %}

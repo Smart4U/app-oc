@@ -72,6 +72,8 @@ class App
 
         // Get the response handler :ResponseInterface
         [$controller, $action] = $route->getRouteHandler();
-        return $this->container->get($controller)->$action($request);
+        $response =  $this->container->get($controller)->$action($request);
+        var_dump(die($response));
+        die;
     }
 }

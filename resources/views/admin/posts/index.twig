@@ -1,0 +1,51 @@
+{% extends "layouts/admin.twig" %}
+
+{% block title %}Les article{% endblock %}
+
+
+{% block content %}
+
+    <h2 class="sub-header">Les articles</h2>
+
+    <div>
+        <a href="{{ path('admin.posts.create') }}" class="btn btn-success">Ajouter un article</a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#ID</th>
+                    <th>online</th>
+                    <th>Title</th>
+                    <th>Lien</th>
+                    <th>Publication</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items.getIterator() %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.online }}</td>
+                    <td>{{ item.title }}</td>
+                    <td>{{ item.slug }}</td>
+                    <td>{{ item.created_at }}</td>
+                    <td>
+                        <form action="{{ path('admin.posts.destroy', {id: item.id}) }}" method="post" style="display: inline">
+                            <input type="hidden" name="http_method" value="DELETE">
+                            <a href="{{ path('admin.posts.edit', {id: item.id}) }}" class="btn btn-info ">modifier</a>
+                            {{ btn }}
+                            <button type="submit" class="btn btn-danger"
+                                onclick="confirm('Êtes-vous sûr de vouloir supprimer cet article ?')"
+                            >supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {{ paginate(items, 'admin.posts.index') }}
+    </div>
+
+
+{% endblock %}
