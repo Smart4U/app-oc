@@ -2,7 +2,9 @@
 
 namespace App\Core;
 
+use App\Core\Renderer\RendererInterface;
 use App\Core\Routing\Router;
+use FastRoute\BadRouteException;
 use GuzzleHttp\Psr7\Response;
 
 use Psr\Container\ContainerInterface;
@@ -60,7 +62,11 @@ class App
 
         // Page Not Found
         if (is_null($route)) {
-            return new Response(404, [], 'Not Found ;(');
+            if ($this->container->get('app')['env'] === 'dev') {
+                throw new BadRouteException('Not Found');
+            }
+            $renderer = $this->container->get(RendererInterface::class);
+            return new Response(404, [], (string)$renderer->render('errors/400/404.twig'));
         }
 
         // Push all params in HTTP Request
@@ -72,8 +78,6 @@ class App
 
         // Get the response handler :ResponseInterface
         [$controller, $action] = $route->getRouteHandler();
-        $response =  $this->container->get($controller)->$action($request);
-        var_dump(die($response));
-        die;
+        return $this->container->get($controller)->$action($request);
     }
 }
