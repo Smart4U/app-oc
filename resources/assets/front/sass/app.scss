@@ -1,3 +1,10 @@
 $icon-font-path: "bootstrap-sass/assets/fonts/bootstrap/";
 @import "../../../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap-sprockets";
 @import "../../../../vendor/twbs/bootstrap-sass/assets/stylesheets/bootstrap";
+
+@import "../sass/font-awesome.min.scss";
+@import "../sass/settings.scss";
+@import "../sass/owl.carousel.scss";
+@import "../sass/owl.theme.scss";
+@import "../sass/style.scss";
+@import "../sass/custom.scss";

@@ -44,4 +44,5 @@ class RouterTwigExtension extends \Twig_Extension
     {
         return $this->router->getURI($path, $params);
     }
+
 }

@@ -38,7 +38,8 @@ class FrontHelperTwigExtension extends \Twig_Extension
             new \Twig_SimpleFunction('style', [$this, 'style'], ['is_safe' => ['html']]),
             new \Twig_SimpleFunction('stylePath', [$this, 'stylePath']),
             new \Twig_SimpleFunction('script', [$this, 'script'], ['is_safe' => ['html']]),
-            new \Twig_SimpleFunction('scriptPath', [$this, 'scriptPath'])
+            new \Twig_SimpleFunction('scriptPath', [$this, 'scriptPath']),
+            new \Twig_SimpleFunction('random', [$this, 'random']),
         ];
     }
 
@@ -88,4 +89,16 @@ class FrontHelperTwigExtension extends \Twig_Extension
     {
         return $this->domain . '/dist/' . $file;
     }
+
+    /**
+     * @param int $min
+     * @param int $max
+     * @return int
+     */
+    public function random(int $min = 1, int $max = 5): int {
+        if($min < $max){
+            return rand($min, $max);
+        }
+    }
+
 }

@@ -38,11 +38,11 @@ class QueryBuilder extends \FluentPDO implements AdapterInterface
 
 
 
-    public function paginate(string $table, int $maxPerPage, int $page) : Pagerfanta
+    public function paginate(string $table, int $maxPerPage, int $page, string $order = 'ORDER BY id DESC') : Pagerfanta
     {
         return (
             new Pagerfanta(
-                (new $this($this->pdo, "SELECT * FROM {$table}", "SELECT COUNT(id) FROM {$table}"))
+                (new $this($this->pdo, "SELECT * FROM {$table} {$order}", "SELECT COUNT(id) FROM {$table}"))
             )
         )->setMaxPerPage($maxPerPage)->setCurrentPage($page);
     }

@@ -15,25 +15,27 @@ class PagesController extends Controller
 {
 
     /**
-     * @return ResponseInterface
+     * @return string
      */
-    public function home(): ResponseInterface {
+    public function home(): string {
 
-        return new Response(200, [], (string)$this->renderer->render('front/pages/home.twig'));
+        return $this->renderer->render('front/pages/home.twig');
     }
 
-    /**
-     * @return ResponseInterface
-     */
-    public function services(): ResponseInterface {
-        return new Response(200, [], (string)$this->renderer->render('front/pages/services.twig'));
-    }
 
     /**
-     * @return ResponseInterface
+     * @return string
      */
-    public function about(): ResponseInterface {
-        return new Response(200, [], (string)$this->renderer->render('front/pages/about.twig'));
+    public function services(): string {
+        return $this->renderer->render('front/pages/services.twig');
+    }
+
+
+    /**
+     * @return string
+     */
+    public function about(): string {
+        return $this->renderer->render('front/pages/about.twig');
     }
 
 }

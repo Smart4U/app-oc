@@ -1,11 +1,84 @@
 {% extends "layouts/default.twig" %}
 
-{% block title %}Article{% endblock %}
+{% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
-    Article titre
+    <div class="section section-bg-blog-{{ random(1,4) }} pt-26 pb-26">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2 class="section-title uppercase white text-center fw-normal fz-56 lh-68 ls-6 mb-3">{{ post.title }}</h2>
+                    <p class="text-center fw-600 fz-14 white">
+                        {{ post.author }} | {{ dateHumanize(post.updated_at) }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section mt-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div> Auteur : <span class="color">{{ post.author }}</span> |  {{ dateHumanize(post.updated_at) }}</div>
+                    <div class="blog-body pt-4">
+
+                         <h3 class="mb-3">{{ post.subtitle }}</h3>
+                         {{ post.content | raw}}
+
+                    {% include('front/comments/index.twig') %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section bg-gray-lighter border-top pt-4 pb-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <a href="{{ path('posts.show', {slug: 'link', id: increment(post.id) }) }}" class="button-nav">
+                        <div class="icon"><i class="fa fa-angle-left"></i></div>
+                        <div class="info">
+                            <div class="content">Article Précédent</div>
+                        </div>
+                    </a>
+                    <a href="{{ path('posts.index') }}" class="button-home">
+                        <span class="home-square"></span>
+                        <span class="home-square"></span>
+                        <span class="home-square"></span>
+                        <span class="home-square"></span>
+                        <span class="home-square"></span>
+                        <span class="home-square"></span>
+                        <span class="home-square"></span>
+                        <span class="home-square"></span>
+                        <span class="home-square"></span>
+                    </a>
+                    <a href="{{ path('posts.show', {slug: 'link', id: decrement(post.id) }) }}" class="button-nav right">
+                        <div class="icon"><i class="fa fa-angle-right"></i></div>
+                        <div class="info">
+                            <div class="content">Article Suivant</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block script %}
-
+    <a id="backtotop" class="fa fa-chevron-up" href="javascript:void(0)"></a>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery-migrate.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/modernizr-2.7.1.min.js"></script>
+    <script type="text/javascript" src="js/owl.carousel.min.js"></script>
+    <script type='text/javascript' src='js/waypoints.min.js'></script>
+    <script type="text/javascript" src="js/jquery.mousewheel.js"></script>
+    <script type="text/javascript" src="js/jquery.jscrollpane.min.js"></script>
+    <script type="text/javascript" src="js/jquery.equalheights.min.js"></script>
+    <script type='text/javascript' src='js/jquery.prettyPhoto.js'></script>
+    <script type='text/javascript' src='js/jquery.prettyPhoto.init.min.js'></script>
+    <script type="text/javascript" src="js/jquery.fitvids.js"></script>
+    <script type='text/javascript' src='js/slick.min.js'></script>
+    <script type="text/javascript" src="js/functions.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
 {% endblock %}
