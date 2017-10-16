@@ -27,7 +27,7 @@ $ composer install; composer dump-autoload
 
 5 . 3 . Then start building public files. (This step requires npm on your server)
 ```bash
-$ npm run prod
+$ npm install; npm run prod
 ```
 
 6 . To take advantage of the cache and file upload it is necessary to give access to the folder storage
