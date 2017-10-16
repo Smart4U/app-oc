@@ -15,6 +15,4 @@ $container = require_once dirname(__DIR__) . '/bootstrap.php';
 
 $app = new \App\Core\App($container);
 
-$response = $app->run();
-
-die($response->getBody()->getContents());
+\Http\Response\send($app->run(\GuzzleHttp\Psr7\ServerRequest::fromGlobals()));
