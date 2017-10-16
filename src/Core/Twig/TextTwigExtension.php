@@ -26,7 +26,7 @@ class TextTwigExtension extends \Twig_Extension
      */
     public function excerpt(?string $content, int $maxLength = 140) :string
     {
-        if(is_null($content)){
+        if (is_null($content)) {
             return '';
         }
         if (mb_strlen($content) > $maxLength) {

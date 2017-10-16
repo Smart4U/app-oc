@@ -26,8 +26,12 @@ if(!dev) {
 let config = {
   entry: {
       app: [
-          './resources/assets/sass/app.scss',
-          './resources/assets/js/app.js'
+          './resources/assets/front/sass/app.scss',
+          './resources/assets/front/js/app.js'
+      ],
+      admin: [
+          './resources/assets/admin/sass/admin.scss',
+          './resources/assets/admin/js/admin.js'
       ]
   },
   watch: dev,
@@ -39,12 +43,20 @@ let config = {
   resolve: {
       alias: {
           '@': path.resolve(__dirname, './resources/assets/'),
-          '@js': path.resolve(__dirname, './resources/assets/js/'),
-          '@css': path.resolve(__dirname, './resources/assets/css/'),
-          '@sass': path.resolve(__dirname, './resources/assets/scss/'),
-          '@images': path.resolve(__dirname, './resources/assets/images/'),
-          '@font': path.resolve(__dirname, './resources/assets/fonts/'),
-          '@vendor': path.resolve(__dirname, 'vendor/')
+          '@vendor': path.resolve(__dirname, 'vendor/'),
+
+          '@js': path.resolve(__dirname, './resources/assets/front/js'),
+          '@css': path.resolve(__dirname, './resources/assets/front/css/'),
+          '@sass': path.resolve(__dirname, './resources/assets/front/sass/'),
+          '@images': path.resolve(__dirname, './resources/assets/front/images/'),
+          '@font': path.resolve(__dirname, './resources/assets/front/fonts/'),
+
+          '@adminjs': path.resolve(__dirname, './resources/assets/admin/js'),
+          '@admicss': path.resolve(__dirname, './resources/assets/admin/css/'),
+          '@admisass': path.resolve(__dirname, './resources/assets/admin/sass/'),
+          '@admiimages': path.resolve(__dirname, './resources/assets/admin/images/'),
+          '@admifont': path.resolve(__dirname, './resources/assets/admin/fonts/')
+
       }
   },
     devtool: dev ? "cheap-module-eval-source-map" : false,

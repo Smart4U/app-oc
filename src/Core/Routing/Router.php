@@ -2,6 +2,7 @@
 
 namespace App\Core\Routing;
 
+use GuzzleHttp\Psr7\ServerRequest;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Expressive\Router\FastRouteRouter;
 use Zend\Expressive\Router\Route as ZendRoute;
@@ -98,5 +99,18 @@ class Router
             return $uri . '?' . http_build_query($getParams);
         }
         return $uri;
+    }
+
+    public function redirect(string $uri, array $params = [], array $queryParams = [])
+    {
+        $uri = $this->getURI($uri, $params, $queryParams);
+
+        $routeInfo = $this->router->match(new ServerRequest('GET', $uri, [], null, 1.1));
+        if ($routeInfo->isSuccess()) {
+            header('Location: ' . $uri);
+            exit();
+        }
+
+        throw new \RuntimeException('Invalid redirect route');
     }
 }

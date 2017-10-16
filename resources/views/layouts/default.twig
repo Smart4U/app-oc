@@ -10,19 +10,19 @@
     {% endblock %}
 </head>
 <body>
-{% include 'elements/loader.twig' %}
-{% include 'elements/search.twig' %}
-{% include 'elements/widget.twig' %}
+{% include 'front/elements/loader.twig' %}
+{% include 'front/elements/search.twig' %}
+{% include 'front/elements/widget.twig' %}
 <div class="site">
 
     {% block nav %}
-        {% include 'elements/nav.twig' %}
+        {% include 'front/elements/nav.twig' %}
     {% endblock %}
 
     <div id="main">
         {% block content %}{% endblock %}
     </div>
-    {% include 'elements/footer.twig' %}
+    {% include 'front/elements/footer.twig' %}
 
 </div>
 

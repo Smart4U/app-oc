@@ -2,171 +2,154 @@
 
 namespace App\Core\Validator;
 
+use App\Core\Validator\Rules\ErrorValidator;
+
 class Validator
 {
-
-    /**
-     * @var
-     */
-    private $fields;
     /**
      * @var array
+     */
+    private $params;
+    /**
+     * @var string[]
      */
     private $errors = [];
 
     /**
-     * @var array
-     */
-    protected $messages = [
-        "required"         => "The format of the %s field is invalid.",
-        "alpha"            => "The field %s should be contain  only letters.",
-        "alpha_dash"       => "The field %s must contain only letters, numbers and dashes.",
-        "alpha_num"        => "The field %s should only contain numbers and letters.",
-        "between"          => "The field %s must be between %s and %s characters long.",
-        "minLength"        => "The field %s must be more than %s characters.",
-        "maxLength"        => "The field %s must not be longer than %s characters long.",
-        "phone"            => "The field %s does not correspond to a valid phone.",
-        "email"            => "The format of the %s field is invalid."
-    ];
-
-    /**
      * Validator constructor.
-     * @param array $fields
-     * @param array $message
+     * @param array $params
      */
-    public function __construct(array $fields = [], array $message = [])
+    public function __construct(array $params)
     {
-        if (!empty($message)) {
-            $this->message = $message;
-        }
-        foreach ($fields as $key => $value) {
-            $this->fields[$key] = trim($value);
-        }
+        $this->params = $params;
     }
 
     /**
-     * @param string[] ...$fields
+     * @param string[] ...$keys
      * @return Validator
      */
-    public function required(string ...$fields): self
+    public function required(string ...$keys): self
     {
-
-        foreach ($fields as $key) {
-            if (empty($this->errors[$key])) {
-                if (array_key_exists($key, $this->fields)) {
-                    if (empty($this->fields[$key])) {
-                        $this->errors[$key] = sprintf($this->messages['required'], $key);
-                    }
-                }
+        foreach ($keys as $key) {
+            $value = $this->getValue($key);
+            if (is_null($value)) {
+                $this->addError($key, 'required');
             }
         }
         return $this;
     }
 
     /**
-     * @param string[] ...$fields
-     * @return $this
+     * @param string[] ...$keys
+     * @return Validator
      */
-    public function email(string ...$fields)
+    public function notEmpty(string ...$keys): self
     {
-        foreach ($fields as $key) {
-            if (empty($this->errors[$key])) {
-                if (array_key_exists($key, $this->fields)) {
-                    if (!filter_var($this->fields[$key], FILTER_VALIDATE_EMAIL)) {
-                        $this->errors[$key] = sprintf($this->messages['email'], $key);
-                    }
-                }
+        foreach ($keys as $key) {
+            $value = $this->getValue($key);
+            if (is_null($value) || empty($value)) {
+                $this->addError($key, 'empty');
             }
         }
         return $this;
     }
 
     /**
+     * @param string $key
      * @param int|null $min
      * @param int|null $max
-     * @param string[] ...$fields
-     * @return $this
+     * @return Validator
      */
-    public function length(?int $min, ?int $max = null, string ...$fields)
+    public function length(string $key, ?int $min, ?int $max = null): self
     {
-        foreach ($fields as $key) {
-            if (empty($this->errors[$key])) {
-                if (array_key_exists($key, $this->fields)) {
-                    if (empty($this->errors[$key])) {
-                        if (!is_null($min) && !is_null($max)) {
-                            if (strlen($this->fields[$key]) < $min || strlen($this->fields[$key]) > $max) {
-                                $this->errors[$key] = sprintf($this->messages['between'], $key, $min, $max);
-                            }
-                        }
-                    }
-
-                    if (empty($this->errors[$key])) {
-                        if (!is_null($min)) {
-                            if (strlen($this->fields[$key]) < $min) {
-                                $this->errors[$key] = sprintf($this->messages['minLength'], $min);
-                            }
-                        }
-                    }
-
-                    if (empty($this->errors[$key])) {
-                        if (!is_null($max)) {
-                            if (strlen($this->fields[$key]) > $max) {
-                                $this->errors[$key] = sprintf($this->messages['maxLength'], $max);
-                            }
-                        }
-                    }
-                }
-            }
+        $value = $this->getValue($key);
+        $length = mb_strlen($value);
+        if (!is_null($min) &&
+            !is_null($max) &&
+            ($length < $min || $length > $max)
+        ) {
+            $this->addError($key, 'between', [$min, $max]);
+            return $this;
+        }
+        if (!is_null($min) &&
+            $length < $min
+        ) {
+            $this->addError($key, 'minLength', [$min]);
+            return $this;
+        }
+        if (!is_null($max) &&
+            $length > $max
+        ) {
+            $this->addError($key, 'maxLength', [$max]);
         }
         return $this;
     }
 
     /**
-     * @param string[] ...$fields
-     * @param null|string $regex
-     * @return $this
+     * @param string $key
+     * @return Validator
      */
-    public function phone(?string $regex = null, string ...$fields)
+    public function slug(string $key): self
     {
-        foreach ($fields as $key) {
-            if (empty($this->errors[$key])) {
-                if (array_key_exists($key, $this->fields)) {
-                    if (!is_null($regex)) {
-                        if (!preg_match($regex, $this->fields[$key])) {
-                            $this->errors[$key] = sprintf($this->messages['phone'], $key);
-                        }
-                    } else {
-                        if (!preg_match('#^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$#', $this->fields[$key])) {
-                            $this->errors[$key] = sprintf($this->messages['phone'], $key);
-                        }
-                    }
-                }
-            }
+        $value = $this->getValue($key);
+        $pattern = '/^([a-z0-9]+-?)+$/';
+        if (!is_null($value) && !preg_match($pattern, $value)) {
+            $this->addError($key, 'slug');
         }
         return $this;
     }
 
+    /**
+     * @param string $key
+     * @param string $format
+     * @return Validator
+     */
+    public function dateTime(string $key, string $format = "Y-m-d H:i:s"): self
+    {
+        $value = $this->getValue($key);
+        $date = \DateTime::createFromFormat($format, $value);
+        $errors = \DateTime::getLastErrors();
+        if ($errors['error_count'] > 0 || $errors['warning_count'] > 0 || $date === false) {
+            $this->addError($key, 'datetime', [$format]);
+        }
+        return $this;
+    }
 
     /**
      * @return bool
      */
-    public function isValid() :bool
+    public function isValid(): bool
     {
-        if (empty($this->errors)) {
-            return true;
-        }
-        return false;
+        return empty($this->errors);
     }
 
     /**
      * @return array
      */
-    public function getErrors()
+    public function getErrors(): array
     {
-        $errors = [];
-        foreach ($this->errors as $key => $message) {
-            $errors['errors.' . $key] = $message;
+        return $this->errors;
+    }
+
+    /**
+     * @param string $key
+     * @param string $rule
+     * @param array $attributes
+     */
+    private function addError(string $key, string $rule, array $attributes = []): void
+    {
+        $this->errors[$key] = new ErrorValidator($key, $rule, $attributes);
+    }
+
+    /**
+     * @param string $key
+     * @return mixed|null
+     */
+    private function getValue(string $key)
+    {
+        if (array_key_exists($key, $this->params)) {
+            return $this->params[$key];
         }
-        return $errors;
+        return null;
     }
 }

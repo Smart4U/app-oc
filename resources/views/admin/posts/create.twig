@@ -1,0 +1,17 @@
+{% extends "layouts/admin.twig" %}
+
+{% block title %}Ajouter un article{% endblock %}
+
+{% block content %}
+
+    <h2 class="sub-header">Ajouter un article</h2>
+
+    <form class="form-posts" action="{{ path('admin.posts.store') }}" method="POST">
+
+        {% include('admin/posts/post-form.twig') %}
+
+        <button type="submit" class="btn btn-success">Enregistrer</button>
+
+    </form>
+
+{% endblock %}
