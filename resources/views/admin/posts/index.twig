@@ -31,7 +31,7 @@
                     <td>{{ item.slug }}</td>
                     <td>{{ item.created_at }}</td>
                     <td>
-                        <form action="{{ path('admin.posts.destroy', {id: item.id}) }}" method="post" style="display: inline">
+                        <form action="{{ path('admin.posts.destroy', {id: item.id}) }}" method="post" style="display: inline">{{ csrf() }}
                             <input type="hidden" name="http_method" value="DELETE">
                             <a href="{{ path('admin.posts.edit', {id: item.id}) }}" class="btn btn-info ">modifier</a>
                             {{ btn }}

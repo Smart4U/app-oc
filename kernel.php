@@ -10,7 +10,7 @@ use function DI\{get,object};
 return [
 
     // SESSION
-    App\Core\Session\SessionInterface::class => \DI\object(\App\Core\Session\Session::class),
+    \App\Core\Session\SessionInterface::class => \DI\object(\App\Core\Session\Session::class),
     \App\Core\Notify\Flash::class => \DI\object(),
 
 
@@ -36,13 +36,18 @@ return [
         \DI\get(App\Core\Twig\TextTwigExtension::class),
         \DI\get(App\Core\Twig\FormHelperTwigExtension::class),
         \DI\get(\App\Core\Twig\DateTwigExtension::class),
-        \DI\get(\App\Core\Twig\BlogTwigExtension::class)
+        \DI\get(\App\Core\Twig\BlogTwigExtension::class),
+        \DI\get(\App\Core\Twig\CSRFTwigExtension::class),
+
+
     ],
 
     // EMAIL
-    Swift_Mailer::class => \DI\factory(App\Core\Mail\SwiftMailerFactory::class),
+    \Swift_Mailer::class => \DI\factory(App\Core\Mail\SwiftMailerFactory::class),
 
     //DATE
-    \Carbon\Carbon::class => object()
+    \Carbon\Carbon::class => object(),
+
+    \Riimu\Kit\CSRF\CSRFHandler::class => object()
 
 ];

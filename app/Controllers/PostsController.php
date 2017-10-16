@@ -28,8 +28,10 @@ class PostsController extends Controller
      */
     protected $post;
 
-    protected $router;
 
+    /**
+     * @var int
+     */
     protected $defaultMaxPerPage = 15;
 
     /**
@@ -37,10 +39,9 @@ class PostsController extends Controller
      * @param RendererInterface $renderer
      * @param Database $database
      */
-    public function __construct(Router $router, RendererInterface $renderer, Database $database) {
+    public function __construct(RendererInterface $renderer, Database $database) {
         $this->post = new Post($database);
         $this->renderer = $renderer;
-        $this->router = $router;
     }
 
     /**
@@ -64,7 +65,4 @@ class PostsController extends Controller
         return $this->renderer->render('front/posts/show.twig', compact('post'));
     }
 
-    public function getLastPosts(int $nbrOfPost) {
-        return $this->post->getLast($nbrOfPost);
-    }
 }
