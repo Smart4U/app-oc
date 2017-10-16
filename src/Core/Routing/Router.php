@@ -76,7 +76,11 @@ class Router
     {
         $routeInfo = $this->router->match($request);
         if ($routeInfo->isSuccess()) {
-            return new Route($routeInfo->getMatchedRouteName(), $routeInfo->getMatchedMiddleware(), $routeInfo->getMatchedParams());
+            return new Route(
+                $routeInfo->getMatchedRouteName(),
+                $routeInfo->getMatchedMiddleware(),
+                $routeInfo->getMatchedParams()
+            );
         }
         return null;
     }
