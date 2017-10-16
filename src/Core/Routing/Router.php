@@ -2,12 +2,14 @@
 
 namespace App\Core\Routing;
 
+use App\Core\Notify\Flash;
 use App\Core\Renderer\RendererInterface;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\ServerRequest;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Riimu\Kit\CSRF\CSRFHandler;
 use Zend\Expressive\Router\FastRouteRouter;
 use Zend\Expressive\Router\Route as ZendRoute;
 
@@ -135,12 +137,20 @@ class Router
             return new Response(301, ['Location ' => substr($request->getUri()->getPath(), 0, -1)], null);
         }
 
+        $method = $request->getMethod();
+        if($method === 'POST' || $method === 'PUT' || $method === 'DELETE') {
+            if(!$this->validateToken($container->get(CSRFHandler::class))){
+                $container->get(Flash::class)->error('Bad Request! Invalid CSRF Token');
+            }
+        }
+
         $route = $this->match($this->buildCorrectMethod($request));
         if (is_null($route)) {
             return $this->notFound($renderer);
         }
 
-        $request = $this->addRequestParameters($request, $route);
+        $request = $this->addRequestParameters($this->getSecuredParmas($this->getSecuredQueryParams($request)), $route);
+
         [$controller, $action] = $route->getRouteHandler();
 
         return $this->found($request, $container->get($controller)->$action($request));
@@ -211,6 +221,45 @@ class Router
             return true;
         }
         return false;
+    }
+
+    /**
+     * @param ServerRequestInterface $request
+     * @return ServerRequestInterface
+     */
+    private function getSecuredParmas(ServerRequestInterface $request) {
+        $params = [];
+        foreach ($request->getParsedBody() as $key => $value) {
+            $params[$key] = htmlentities($value);
+        }
+        $request = $request->withParsedBody($params);
+        return $request;
+    }
+
+    /**
+     * @param ServerRequestInterface $request
+     * @return ServerRequestInterface
+     */
+    private function getSecuredQueryParams(ServerRequestInterface $request) {
+        $params = [];
+        foreach ($request->getQueryParams() as $key => $value) {
+            $params[$key] = htmlentities($value);
+        }
+        $request = $request->withQueryParams($params);
+        return $request;
+    }
+
+    /**
+     * @param CSRFHandler $CSRFHandler
+     * @return bool
+     */
+    private function validateToken(CSRFHandler $CSRFHandler): bool {
+
+        if($CSRFHandler->validateRequest(true)) {
+            return true;
+        }
+        return false;
+
     }
 
 }

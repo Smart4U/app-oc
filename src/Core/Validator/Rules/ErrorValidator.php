@@ -23,7 +23,7 @@ class ErrorValidator
     private $messages = [
         'required' => 'Le champ %s est obligatoire.',
         'empty' => 'Le champ %s ne peut être vide',
-        'email' => 'Le champ $s doit être une addresse mail.',
+        'email' => 'Le champ %s doit être une addresse mail.',
         'phone' => 'Le champ %s doit être un numéro de télélphone.',
         'slug' => 'Le champ %s doit seulement contenir des lettres, des chiffres et des tirets.',
         'between' => 'Le texte %s doit avoir entre %d et %d caractères.',
