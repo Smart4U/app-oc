@@ -101,6 +101,35 @@ class Validator
 
     /**
      * @param string $key
+     * @return Validator
+     */
+    public function email(string $key): self
+    {
+
+        $value = $this->getValue($key);
+        if (!is_null($value) && !filter_var($value, FILTER_VALIDATE_EMAIL)) {
+            $this->addError($key, 'email');
+        }
+        return $this;
+    }
+
+    /**
+     * @param string $key
+     * @return Validator
+     */
+    public function phone(string $key): self
+    {
+
+        $value = $this->getValue($key);
+        $pattern = '/^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/';
+        if (!is_null($value) && !preg_match($pattern, $value)) {
+            $this->addError($key, 'phone');
+        }
+        return $this;
+    }
+
+    /**
+     * @param string $key
      * @param string $format
      * @return Validator
      */

@@ -1,0 +1,36 @@
+<form action="{{ path('contact.send') }}" method="POST">
+
+    <div class="row">
+        <div class="col-md-6">
+            {{ field('lastName', contact.last_name, "Nom") }}
+        </div>
+        <div class="col-md-6">
+            {{ field('firstName', contact.first_name, "Prénom") }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            {{ field('email', contact.email, "Email") }}
+        </div>
+        <div class="col-md-6">
+            {{ field('phone', contact.phone, "Téléphone") }}
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            {{ field('message', contact.message, "Votre message", {type: 'textarea'}) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-item">
+                <input type="submit" value="Envoyez votre message" class="submit">
+            </div>
+        </div>
+    </div>
+
+</form>

@@ -35,7 +35,9 @@ return [
         \DI\get(App\Core\Twig\PagerFantaTwigExtension::class),
         \DI\get(App\Core\Twig\TextTwigExtension::class),
         \DI\get(App\Core\Twig\FormHelperTwigExtension::class)
-
     ],
+
+    // EMAIL
+    Swift_Mailer::class => \DI\factory(App\Core\Mail\SwiftMailerFactory::class)
 
 ];

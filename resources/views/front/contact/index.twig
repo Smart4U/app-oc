@@ -2,38 +2,206 @@
 
 {% block title %}Contact{% endblock %}
 
+{% block style %}
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="css/settings.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="css/owl.carousel.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="css/owl.theme.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="css/custom.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="css/contact.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i%7CPT+Sans:400,400i,700,700i" />
+{% endblock %}
 {% block content %}
-    <form class="form-contact" action="{{ url('contact.send') }}" method="POST">
-
-        {{ csrfField() }}
-
-        {% include 'elements/flash.twig' %}
-
-        <div class="row">
-            {{ field('firstName', firstName, {class: 'form-control form-text', placeholder: 'First Name'}, false, 'text', {div: {class: 'col-md-6'}}) }}
-            {{ field('lastName', lastName, {class: 'form-control form-text', placeholder: 'Last Name'}, false, 'text', {div: {class: 'col-md-6'}}) }}
-        </div>
-
-        <div class="row">
-            {{ field('email', email, {class: 'form-control form-text', placeholder: 'Email'}, false, 'email', {div: {class: 'col-md-6'}}) }}
-            {{ field('phone', phone, {class: 'form-control form-text', placeholder: 'Phone'}, false, 'phone', {div: {class: 'col-md-6'}}) }}
-        </div>
-
-        <div class="row">
-            {{ selectField('subject', subject, {options: {0: 'subject 1', 1: 'subject 2' }}, {class: 'form-control form-text', placeholder: 'Subject'}, false, 'text', {div: {class: 'col-md-12'}}) }}
-        </div>
-
-        <div class="row">
-            {{ longField('message', message, {class: 'form-control form-control', placeholder: 'Your message...'}, false, 40,  10, {div: {class: 'col-md-12'}}) }}
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-item text-center">
-                    {{ btn('Send', {class: 'submit'}) }}
+<div id="main">
+    <div class="section  section-bg-contact-1 section-cover pt-28 pb-26">
+        <div class="bg-overlay-light"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2 class="section-title white text-center fw-bolder fz-76 fz-xs-35 lh-76 lh-xs-40 ls-2 uppercase mb-3">Entrons en contact</h2>
+                    <div class="section-title dark text-center fw-bolder fz-76 fz-xs-35 lh-76 lh-xs-40 ls-2">
+                        <div id="typed-strings">
+                            <p>Pour votre projet</p>
+                            <p>Pour un renseignement</p>
+                            <p>Pour un partenariat</p>
+                            <p>Pour échanger</p>
+                        </div>
+                        <span id="typed" class="dark fw-bolder"></span>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="ver-separator-container">
+        <div class="ver-separator"></div>
+    </div>
+    <div class="section pt-14 pb-14">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="text-center mb-6">
+                        <h2 class="section-title fw-bolder fz-32 lh-32 ls-2 mb-3">Concrétisons votre projet ensemble</h2>
+                        <p>
+                            Nous vous guidons tout au long de la procédure jusqu'à ce votre activité soit en ligne.<br />
+                            Rien de mieux que d'etre épaulé par une équipe de professionnels qualifiés.
+                        </p>
+                        <div class="heading-line mt-0">
+                            <div class="heading-line-inner-4"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="block-icon-box style-3 text-center">
+                        <div class="icon">
+                            <div class="icon-inner">
+                                <i class="fa fa-cog"></i>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <h3 class="title">Conception sur mesure</h3>
+                            <p>
+                                One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into horrible vermin. his head a little he could.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="block-icon-box style-3 text-center">
+                        <div class="icon">
+                            <div class="icon-inner">
+                                <i class="fa fa-database"></i>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <h3 class="title">Confidentialité sur vos données</h3>
+                            <p>
+                                One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into horrible vermin. his head a little he could.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="block-icon-box style-3 text-center">
+                        <div class="icon">
+                            <div class="icon-inner">
+                                <i class="fa fa-cube"></i>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <h3 class="title">Modules réutilisables</h3>
+                            <p>
+                                One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into horrible vermin. his head a little he could.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6 p-0">
+                    <img src="images/contact-coffe.jpg" alt="">
+                </div>
+                <div class="col-sm-6 pr-6 pl-6">
+                    <div class="mt-11"></div>
+                    <h2 class="section-title fw-bolder fz-32 lh-32 ls-2 mb-2">RENCONTRONS-NOUS AUTOUR D'UN CAFE</h2>
+                    <div class="heading-line mt-0 mb-2">
+                        <div class="heading-line-inner-3 ml-0 color"></div>
+                    </div>
+                    <p>
+                        Venez nous rencontrer autour d'une tasse de café. On prendra le temps naissaire pour vous expliquer les démarche à suivre pour réaliser votre site web. Vous avez des questions en suspent n'hésitez pas à passer. Il eLorem ipsum dolor sit amet, consectetur adipisicing elit. Est harum hic illo odit repellendus voluptas voluptatum! Blanditiis consequuntur deleniti fugiat maxime odit perferendis quia quis repellendus? Dolorem maxime omnis quod!
+                    </p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio dolorem impedit officiis porro quae quibusdam? Ad, culpa distinctio doloribus enim eum exercitationem inventore nam nobis praesentium quas recusandae tenetur voluptatum!lorem  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores commodi culpa deleniti doloremque expedita molestias nemo optio quaerat reiciendis. Doloremque ea earum exercitationem iure modi nesciunt omnis quidem rem sunt?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam architecto atque debitis eos exercitationem laborum molestiae nam natus necessitatibus, nisi omnis placeat, quam qui quia, quod reiciendis tempora unde vero.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem, consequatur doloremque molestiae quia quibusdam reprehenderit temporibus vitae voluptate. Blanditiis culpa facilis illum in iste, rem repellat sequi! Neque nihil, quos.</p>
+                    <ul class="icon-list mt-4">
+                        <li>
+                            <div class="icon">
+                                <div class="icon-inner">
+                                    <i class="fa fa-mobile"></i>
+                                </div>
+                            </div>
+                            <div class="content">
+                                07 81 21 99 22
+                            </div>
+                        </li>
+                        <li>
+                            <div class="icon">
+                                <div class="icon-inner">
+                                    <i class="fa fa-map-signs"></i>
+                                </div>
+                            </div>
+                            <div class="content">
+                                45 Rue d'isitre les mas du soleil
+                            </div>
+                        </li>
+                        <li>
+                            <div class="icon">
+                                <div class="icon-inner">
+                                    <i class="fa fa-calendar-o"></i>
+                                </div>
+                            </div>
+                            <div class="content">
+                                83600 - Fréjus
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="mb-11"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section pt-10 pb-10" id="form-contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-push-2">
+                    <div class="text-center">
+                        <h2 class="section-title fw-bolder fz-32 ls-3 mb-2">Le point de départ</h2>
+                        <p>
+                            Afin de concrétiser votre projet de commuication numérique, il est primordial de cibler l'ensemble de vos besoins. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aspernatur assumenda cumque dicta est eum facilis ipsum iste iure laboriosam non, nostrum nulla obcaecati odio odit quo tenetur, ullam vero.
+                        </p>
+                        <div class="heading-line mt-2 mb-2">
+                            <div class="heading-line-inner-3"></div>
+                        </div>
 
-    </form>
+                        {% include('front/contact/contact-form.twig') %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery-migrate.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/modernizr-2.7.1.min.js"></script>
+    <script type="text/javascript" src="js/owl.carousel.min.js"></script>
+    <script type='text/javascript' src='js/waypoints.min.js'></script>
+    <script type="text/javascript" src="js/jquery.mousewheel.js"></script>
+    <script type="text/javascript" src="js/jquery.jscrollpane.min.js"></script>
+    <script type="text/javascript" src="js/jquery.equalheights.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-progressbar.min.js"></script>
+    <script type="text/javascript" src="js/typed.js"></script>
+    <script type="text/javascript" src="js/functions.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
+
+    <script type="text/javascript" src="js/jquery.themepunch.tools.min.js"></script>
+    <script type="text/javascript" src="js/jquery.themepunch.revolution.min.js"></script>
+    <script type="text/javascript" src="js/extensions/revolution.extension.video.min.js"></script>
+    <script type="text/javascript" src="js/extensions/revolution.extension.slideanims.min.js"></script>
+    <script type="text/javascript" src="js/extensions/revolution.extension.actions.min.js"></script>
+    <script type="text/javascript" src="js/extensions/revolution.extension.layeranimation.min.js"></script>
+    <script type="text/javascript" src="js/extensions/revolution.extension.kenburn.min.js"></script>
+    <script type="text/javascript" src="js/extensions/revolution.extension.navigation.min.js"></script>
+    <script type="text/javascript" src="js/extensions/revolution.extension.migration.min.js"></script>
+    <script type="text/javascript" src="js/extensions/revolution.extension.parallax.min.js"></script>
 {% endblock %}
