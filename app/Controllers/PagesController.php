@@ -22,11 +22,11 @@ class PagesController extends Controller
         return $this->renderer->render('front/pages/home.twig');
     }
 
-
     /**
      * @return string
      */
     public function services(): string {
+
         return $this->renderer->render('front/pages/services.twig');
     }
 

@@ -10,5 +10,5 @@ composer.phar
 public/dist
 node_modules
 
-storage
+storage/*
 tests/coverage

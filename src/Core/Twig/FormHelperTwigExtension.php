@@ -93,7 +93,7 @@ class FormHelperTwigExtension extends \Twig_Extension
      */
     private function textarea(?string $value, array $attributes): string
     {
-        return "<textarea " . $this->getHtmlFromArray($attributes) . ">{$value}</textarea>";
+        return "<textarea " . $this->getHtmlFromArray($attributes) . " rows='10' cols='50'>{$value}</textarea>";
     }
 
     /**

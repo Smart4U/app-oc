@@ -2,6 +2,7 @@
 
 namespace MyApp\Controllers;
 
+use GuzzleHttp\Psr7\Request;
 use Swift_Mailer;
 use Swift_Message;
 use App\Core\Notify\Flash;
@@ -73,12 +74,25 @@ class ContactController extends Controller
             ->setTo([$this->mailTo])
             ->setBody($params['message']);
 
-        if( !$this->mailer->send($message)) {
-            throw new \Swift_SwiftException('Une erreur inattendue s\'est produite, veuillez réessayer ultérieurement.');
+        try{
+            $this->mailer->send($message);
+        }catch (\Exception $e) {
+            die('Une erreur inattendue s\'est produite, veuillez réessayer ultérieurement.');
+            exit();
         }
 
         $this->flash->success('Merci ! Votre message a bien été envoyé. Nous y répondrons dès que possible.');
-        return header('Location: /contact#contact-form');
+        $this->redirectToForm($request);
+    }
+
+    private function redirectToForm(ServerRequestInterface $request) {
+        $server = $request->getServerParams();
+        if(isset($server['HTTP_REFERER'])){
+            $referer = $server['HTTP_REFERER'];
+            header('Location: ' . $referer . '#contact-form');exit();
+
+        }
+        header('Location: /contact#contact-form');exit();
     }
 
 

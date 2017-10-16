@@ -93,8 +93,8 @@
     <div class="section">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-6 p-0">
-                    <img src="images/contact-coffe.jpg" alt="">
+                <div class="col-sm-6 p-0 pl-20 pt-12">
+                    <img src="images/contact-coffe.png" alt="">
                 </div>
                 <div class="col-sm-6 pr-6 pl-6">
                     <div class="mt-11"></div>
@@ -156,6 +156,8 @@
                         <div class="heading-line mt-2 mb-2">
                             <div class="heading-line-inner-3"></div>
                         </div>
+
+                        {% include 'front/elements/flash.twig' %}
 
                         {% include('front/contact/contact-form.twig') %}
 

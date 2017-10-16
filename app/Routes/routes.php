@@ -8,8 +8,7 @@ use MyApp\Controllers\ContactController;
 
 // PAGES
 $router->get('pages.home', '/', [PagesController::class, 'home'], 'home');
-
-$router->get('pages.services', '/services', [PagesController::class, 'services']);
+$router->get('pages.services', '/services', [PagesController::class, 'services'], 'services');
 $router->get('pages.about', '/a-propos', [PagesController::class, 'about']);
 
 // BLOG
@@ -18,6 +17,7 @@ $router->get('posts.show', '/article/{slug: [a-zA-Z0-9\-]+}-{id:\d+}', [PostsCon
 
 // CONTACT
 $router->get('contact.index', '/contact', [ContactController::class, 'index']);
+$router->get('contact.index-form', '/contact#contaxt-form', [ContactController::class, 'index']);
 $router->post('contact.send', '/contact', [ContactController::class, 'send']);
 
 // ADMIN
