@@ -3,6 +3,13 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+    <link rel="shortcut icon" href="favicon.ico"/>
+    <title>{% block title %}{% endblock %}NetADN</title>
+    {% block style %}
+        {{ style('app.css') }}
+    {% endblock %}
+</head>
+<body>
 {% include 'front/elements/loader.twig' %}
 {% include 'front/elements/search.twig' %}
 {% include 'front/elements/widget.twig' %}
@@ -18,9 +25,6 @@
     {% include 'front/elements/footer.twig' %}
 
 </div>
-
-
-<a id="backtotop" class="fa fa-chevron-up" href="javascript:void(0)"></a>
 
 {# script('app.js') #}
 {% block script %}
