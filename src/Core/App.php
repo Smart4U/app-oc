@@ -2,6 +2,8 @@
 
 namespace App\Core;
 
+use App\Core\Database\Database;
+use App\Core\Database\QueryBuilder;
 use App\Core\Routing\Router;
 use GuzzleHttp\Psr7\Response;
 use Psr\Container\ContainerInterface;
@@ -27,9 +29,12 @@ class App
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
+
         $router = $this->container->get(Router::class);
         $router->get('page.home', '/', function () {
-            return new Response(200, [], 'page homepage');
+
+            return new Response(200, [], null);
+
         });
         $router->get('page.about', '/a-propos', function () {
             return new Response(200, [], 'page à-propos');
