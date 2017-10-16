@@ -78,3 +78,51 @@ Virtual host
         }
     
     }
+
+## List of project dependancies
+
+#### Backend
+--- default
+Engine:                         php v7.1
+Handler errors:                 filp/whoops
+Manage variable envirnment:     vlucas/phpdotenv
+Dependency Injection Container: php-di/php-di
+Router:                         zendframework/zend-expressive-fastroute
+HTTP Request:                   guzzlehttp/psr7
+Protection CSRF:                riimu/kit-csrf
+QueryBuilder:                   fpdo/fluentpdo
+Response sender:                http-interop/response-sender
+Emailsender:                    swiftmailer/swiftmailer
+Manipule Datetime:              nesbot/carbon
+Pagination:                     pagerfanta/pagerfanta
+Render view:                    twig/twig
+Admin layout:                   twbs/bootstrap-sass
+
+--- dev
+Unit test:                      phpunit/phpunit
+Code sniffer                    squizlabs/php_codesniffer
+Migration                       robmorgan/phinx
+Seed                            fzaninotto/faker
+
+#### Frontend
+
+Template: https://themeforest.net/item/kameleon-responsive-creative-html-template/19722379?s_rank=2
+
+webpack
+webpack-manifest-plugin
+url-loader
+uglifyjs-webpack-plugin
+style-loader
+sass-loader
+postcss-loader
+node-sass
+imports-loader
+file-loader
+css-loader
+babel-preset-env
+babel-plugin-syntax-dynamic-import
+babel-loader
+babel-core
+autoprefixer
+clean-webpack-plugin
+extract-text-webpack-plugin
