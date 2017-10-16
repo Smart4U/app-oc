@@ -18,7 +18,7 @@ class DriverFactory
      */
     public static function getDriver(array $settings)
     {
-        if ( !isset($settings['default'])
+        if (!isset($settings['default'])
             && !isset($settings[$settings['default']]['driver'])
             && !array_key_exists($settings[$settings['default']], $settings)
         ) {
