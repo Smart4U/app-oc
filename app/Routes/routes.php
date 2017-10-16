@@ -14,4 +14,5 @@ $router->get('posts.show', '/article/{slug: [a-zA-Z0-9\-]+}-{id:\d+}', [PostsCon
 
 // CONTACT
 $router->get('contact.index', '/contact', [ContactController::class, 'index']);
+$router->post('contact.send', '/contact', [ContactController::class, 'send']);
 
