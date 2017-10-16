@@ -2,10 +2,11 @@
 
 namespace App\Core\Database;
 
-use Pagerfanta\Pagerfanta;
 use PDO;
 use PDOException;
 use PDOStatement;
+
+use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\AdapterInterface;
 
 /**
@@ -23,6 +24,10 @@ class QueryBuilder implements AdapterInterface
      * @var array
      */
     private $sql;
+    /**
+     * @var
+     */
+    private $model;
     /**
      * @var array|string|null
      */
@@ -73,6 +78,12 @@ class QueryBuilder implements AdapterInterface
         $this->pdo = $pdo;
         $this->paginateQuery = $paginateQuery;
         $this->countPaginationQuery = $countPaginationQuery;
+    }
+
+    public function model(string $model): self
+    {
+        $this->model = $model;
+        return $this;
     }
 
     /**
@@ -213,6 +224,14 @@ class QueryBuilder implements AdapterInterface
         return $this;
     }
 
+    public function all(): QueryResults
+    {
+        return new QueryResults(
+            $this->execute()->fetchAll(PDO::FETCH_ASSOC),
+            $this->model
+        );
+    }
+
     /**
      * @return string
      */
@@ -328,6 +347,7 @@ class QueryBuilder implements AdapterInterface
         } catch (PDOException $e) {
             $e->getMessage();
         }
+
         return false;
     }
 
@@ -340,19 +360,6 @@ class QueryBuilder implements AdapterInterface
     private function bindParams($params) :PDOStatement
     {
         return $this->pdo->prepare($params);
-    }
-
-    /**
-     * Clear the query
-     */
-    private function queryCleaner()
-    {
-        foreach ($this as $key => $value) {
-            if ($key !== 'pdo') {
-                unset($this->$key);
-            }
-        }
-        return true;
     }
 
     /**
@@ -370,7 +377,6 @@ class QueryBuilder implements AdapterInterface
         $this->sql[] = $this->buildOffset(); // OFFSET
         $query = (string)join(' ', array_filter($this->sql));
 
-        $this->queryCleaner();
         return $query;
     }
 

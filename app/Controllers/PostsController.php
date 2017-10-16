@@ -4,7 +4,9 @@ namespace MyApp\Controllers;
 
 use App\Core\Database\Database;
 use App\Core\Database\QueryBuilder;
+use App\Core\Helper\Hydrator;
 use GuzzleHttp\Psr7\Response;
+use MyApp\Models\Post;
 use Psr\Http\Message\ResponseInterface;
 use App\Core\Controller\Controller;
 use Psr\Http\Message\ServerRequestInterface;
@@ -28,7 +30,8 @@ class PostsController extends Controller
     }
 
     public function show(ServerRequestInterface $request){
-        $post = $this->QB->select()->from('posts')->where('id = :id')->params(['id' => $request->getAttributes()['id']])->execute();
+        $post = $this->QB->select()->from('posts')->where('id = 1')->model(Post::class)->all();
+        $post = new $post->model($post->records);
         return new Response(200, [], 'show article');
     }
 
