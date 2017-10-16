@@ -102,7 +102,6 @@ class Post extends Model
         $this->QB = new QueryBuilder($this->database);
     }
 
-
     /**
      * @param Validator $validator
      * @param array $params
@@ -310,5 +309,24 @@ class Post extends Model
     {
         $this->updatedAt = $this->getCurrentDateTime();
     }
+
+    /**
+     * @param int $maxPerPage
+     * @param int $currentPage
+     * @return \Pagerfanta\Pagerfanta
+     */
+    public function pagination(int $maxPerPage, int $currentPage, string $order = 'ORDER BY id DESC')
+    {
+        return $this->QB->paginate($this->table, $maxPerPage, $currentPage, $order);
+    }
+
+    /**
+     * @param $limit
+     * @return array
+     */
+    public function getLast($limit) {
+        return $this->QB->from($this->table)->limit($limit)->orderBy('updated_at')->fetchAll();
+    }
+
 
 }

@@ -78,7 +78,7 @@ class ContactController extends Controller
         }
 
         $this->flash->success('Merci ! Votre message a bien été envoyé. Nous y répondrons dès que possible.');
-        return header('Location: /contact');
+        return header('Location: /contact#contact-form');
     }
 
 

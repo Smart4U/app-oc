@@ -9,6 +9,14 @@ require ROOT . '/vendor/autoload.php';
 
 
 /**
+ * Whoops Error Handler
+ */
+$whoops = new \Whoops\Run;
+$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+$whoops->register();
+
+
+/**
  * Environment variables (dotfile .env)
  */
 $env = new \Dotenv\Dotenv(ROOT);

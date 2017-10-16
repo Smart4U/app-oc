@@ -1,0 +1,43 @@
+.owl-carousel {
+	.owl-wrapper {
+		&:after {
+			content: ".";
+			display: block;
+			clear: both;
+			visibility: hidden;
+			line-height: 0;
+			height: 0;
+		}
+		display: none;
+		position: relative;
+	}
+	display: none;
+	position: relative;
+	width: 100%;
+	.owl-wrapper-outer {
+		overflow: hidden;
+		position: relative;
+		width: 100%;
+		&.autoHeight {
+			transition: height 500ms ease-in-out;
+		}
+	}
+	.owl-item {
+		float: left;
+	}
+}
+
+.owl-controls {
+	.owl-page, .owl-buttons div {
+		cursor: pointer;
+	}
+	user-select: none;
+}
+
+.grabbing {
+	cursor: url(../images/carousel/grabbing.png) 8 8, move;
+}
+
+.owl-carousel {
+	.owl-wrapper, .owl-item {}
+}

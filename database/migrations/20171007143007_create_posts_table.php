@@ -34,6 +34,7 @@ class CreatePostsTable extends AbstractMigration
             ->addColumn('title', 'string')
             ->addColumn('subtitle', 'string')
             ->addColumn('content', 'text', ['limit' => \Phinx\Db\Adapter\MysqlAdapter::TEXT_LONG])
+            ->addColumn('thumbnail', 'string')
             ->addColumn('created_at', 'datetime')
             ->addColumn('updated_at', 'datetime')
             ->create();

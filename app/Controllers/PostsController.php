@@ -2,12 +2,11 @@
 
 namespace MyApp\Controllers;
 
-use App\Core\Database\Database;
-use App\Core\Database\QueryBuilder;
-use App\Core\Renderer\RendererInterface;
-use GuzzleHttp\Psr7\Response;
+
+use App\Core\Routing\Router;
 use MyApp\Models\Post;
-use Psr\Http\Message\ResponseInterface;
+use App\Core\Database\Database;
+use App\Core\Renderer\RendererInterface;
 use App\Core\Controller\Controller;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -19,41 +18,53 @@ class PostsController extends Controller
 {
 
     /**
-     * @var QueryBuilder
-     */
-    protected $QB;
-    /**
      * @var RendererInterface
      */
     protected $renderer;
+
+
+    /**
+     * @var Post
+     */
+    protected $post;
+
+    protected $router;
+
+    protected $defaultMaxPerPage = 15;
 
     /**
      * PostsController constructor.
      * @param RendererInterface $renderer
      * @param Database $database
      */
-    public function __construct(RendererInterface $renderer, Database $database) {
-        $this->QB = new QueryBuilder($database->getConnection());
+    public function __construct(Router $router, RendererInterface $renderer, Database $database) {
+        $this->post = new Post($database);
         $this->renderer = $renderer;
+        $this->router = $router;
     }
 
     /**
      * @param ServerRequestInterface $request
-     * @return ResponseInterface
+     * @return string
      */
-    public function index(ServerRequestInterface $request): ResponseInterface {
-        $posts = $this->QB->paginate('posts', 10, $request->getQueryParams()['p'] ?? 1)->getIterator();
-        return new Response(200, [], (string)$this->renderer->render('front/posts/index.twig', compact($posts)));
+    public function index(ServerRequestInterface $request): string {
+        $posts = $this->post->pagination($this->defaultMaxPerPage, $request->getQueryParams()['p'] ?? 1, 'ORDER BY updated_at DESC');
+
+        return $this->renderer->render('front/posts/index.twig', compact('posts'));
     }
 
     /**
      * @param ServerRequestInterface $request
-     * @return ResponseInterface
+     * @return string
      */
-    public function show(ServerRequestInterface $request): ResponseInterface {
-        $post = $this->QB->select()->from('posts')->where('id = 1')->model(Post::class)->all();
-        $post = new $post->model($post->records);
-        return new Response(200, [], 'front/posts/show.twig', compact($post));
+    public function show(ServerRequestInterface $request): string {
+        $post = $this->post->find($request->getAttribute('id'));
+
+
+        return $this->renderer->render('front/posts/show.twig', compact('post'));
     }
 
+    public function getLastPosts(int $nbrOfPost) {
+        return $this->post->getLast($nbrOfPost);
+    }
 }

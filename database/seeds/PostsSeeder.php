@@ -20,14 +20,15 @@ class PostsSeeder extends AbstractSeed
 
         for ($i = 0; $i < 100; $i++) {
             $TheDateTime = $faker->unixTime('now');
-
+            $content = "<p class='mb-3'>{$faker->text(600)}</p><p>{$faker->text(3000)}</p><p class='mt-5'>{$faker->text(1200)}</p>";
             $posts[] = [
                 'online' => rand(-1, 1),
                 'author' => $faker->name(),
-                'slug' => $faker->slug(5),
-                'title' => $faker->sentence(5),
-                'subtitle' => $faker->sentence(7),
-                'content' => $faker->text(1000),
+                'slug' => $faker->slug(4),
+                'title' => $faker->sentence(4),
+                'subtitle' => $faker->sentence(3),
+                'content' => $content,
+                'thumbnail' => $faker->imageUrl(604, 403, null,true, null),
                 'created_at' => date('Y-m-d H:i:s', $TheDateTime),
                 'updated_at' => date('Y-m-d H:i:s', $TheDateTime)
             ];

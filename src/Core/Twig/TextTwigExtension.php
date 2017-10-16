@@ -31,7 +31,7 @@ class TextTwigExtension extends \Twig_Extension
         }
         if (mb_strlen($content) > $maxLength) {
             $excerpt = mb_substr($content, 0, $maxLength);
-            $lastSpace = mb_strrpos($excerpt, '');
+            $lastSpace = mb_strrpos($excerpt, ' ');
             return mb_substr($excerpt, 0, $lastSpace) . '...';
         }
         return $content;
