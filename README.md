@@ -5,3 +5,6 @@
 ```bash
 $ git clone https://github.com/Smart4U/app-oc.git
 ```
+
+2 . Edit the environment configuration file "example.env" correctly.
+Then rename it to ".env".

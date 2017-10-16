@@ -2,6 +2,8 @@
 
 namespace App\Core;
 
+use Psr\Container\ContainerInterface;
+
 /**
  * Class App
  * @package App\Core
@@ -10,7 +12,21 @@ class App
 {
 
     /**
-     * start the application and send the response
+     * @var ContainerInterface
+     */
+    protected $container;
+
+    /**
+     * App constructor.
+     * @param ContainerInterface $container
+     */
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
+    /**
+     * Start the application and send the response
      *
      * @return string
      */
