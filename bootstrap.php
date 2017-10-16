@@ -31,6 +31,16 @@ foreach ($config as $value) {
 
 
 /**
+ * List of bundles to loaded in this App
+ */
+$builder->addDefinitions([
+    'bundles' => [
+        \MyApp\MyApp::class
+    ]
+]);
+
+
+/**
  * The kernel contains the global dependencies
  */
 $kernel = ROOT . '/kernel.php';
